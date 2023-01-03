@@ -21,4 +21,10 @@ const Color blackWhite10 = Color.fromRGBO(229, 228, 227, 1.0);
 const Color offWhite = Color.fromRGBO(255, 255, 255, 1.0);
 const Color offWhiteBackground = Color.fromRGBO(248, 248, 248, 1.0);
 
+// Alerts Color
+const Color greenAlert = Color.fromRGBO(82, 196, 26, 1.0);
+const Color yellowAlert = Color.fromRGBO(250, 173, 20, 1.0);
+const Color redAlert = Color.fromRGBO(255, 77, 79, 1.0);
+const Color blueAlert = Color.fromRGBO(24, 144, 255, 1.0);
+
 // --------------
