@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:petshop_app_flutter/ui/style_guide.dart';
+part of 'pages.dart';
 
 final List<String> imgList = [
   'assets/images/illustration1.png',
