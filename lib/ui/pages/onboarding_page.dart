@@ -15,8 +15,8 @@ final List<Widget> imageSliders = imgList
         ))
     .toList();
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class OnboardingPage extends StatelessWidget {
+  const OnboardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,9 @@ class SplashScreen extends StatelessWidget {
                             child: SizedBox(
                               height: 60,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.goNamed('sign_in');
+                                },
                                 style: ButtonStyle(
                                   elevation: const MaterialStatePropertyAll(0),
                                   shape: MaterialStatePropertyAll(

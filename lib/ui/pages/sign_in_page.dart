@@ -1,13 +1,13 @@
 part of 'pages.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isEmail = false;
   bool _isPassword = false;
