@@ -6,3 +6,4 @@ import '../../shared/shared.dart';
 
 part 'onboarding_page.dart';
 part 'sign_in_page.dart';
+part 'main_page.dart';

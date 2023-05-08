@@ -1,5 +1,13 @@
 part of 'shared.dart';
 
+const double defaultMargin = 24.0;
+
+// Font
+TextStyle blackTextFont =
+    const TextStyle(fontFamily: 'Poppins', color: Colors.black);
+TextStyle greyTextFont =
+    const TextStyle(fontFamily: 'Poppins', color: Color(0xFF898989));
+
 // --------------
 // Color Pallette
 
