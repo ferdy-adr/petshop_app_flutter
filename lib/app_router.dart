@@ -4,28 +4,28 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     routes: [
       GoRoute(
-        path: '/onboarding',
+        path: '/welcome',
         name: 'onboarding_page',
         builder: (context, state) {
           return const OnboardingPage();
         },
       ),
       GoRoute(
-        path: '/sign_in',
-        name: 'sign_in',
+        path: '/login',
+        name: 'sign_in_page',
         builder: (context, state) {
           return const SignInPage();
         },
       ),
       GoRoute(
-        path: '/main_page',
+        path: '/',
         name: 'main_page',
         builder: (context, state) {
           return const MainPage();
         },
       ),
     ],
-    initialLocation: '/main_page',
+    initialLocation: '/welcome',
     debugLogDiagnostics: true,
     routerNeglect: true,
   );

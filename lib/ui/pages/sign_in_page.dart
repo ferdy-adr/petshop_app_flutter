@@ -12,6 +12,9 @@ class _SignInPageState extends State<SignInPage> {
   bool _isEmail = false;
   bool _isPassword = false;
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,17 +65,19 @@ class _SignInPageState extends State<SignInPage> {
                             child: Column(
                               children: [
                                 TextFormField(
+                                  controller: emailController,
                                   onChanged: (value) {
                                     setState(() {
-                                      value.isNotEmpty
+                                      value.trim().isNotEmpty
                                           ? _isEmail = true
                                           : _isEmail = false;
                                     });
                                   },
                                   validator: (String? value) {
-                                    return value!.contains('@')
+                                    return EmailValidator.validate(
+                                            (value ?? '').trim())
                                         ? null
-                                        : 'Please enter e valid email address.';
+                                        : 'Please enter a valid email address.';
                                   },
                                   cursorColor: mainColor100,
                                   style: const TextStyle(
@@ -119,17 +124,20 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                                 const SizedBox(height: 16),
                                 TextFormField(
+                                  controller: passwordController,
                                   onChanged: (value) {
                                     setState(() {
-                                      value.isNotEmpty
+                                      value.trim().isNotEmpty
                                           ? _isPassword = true
                                           : _isPassword = false;
                                     });
                                   },
                                   validator: (String? value) {
-                                    return value!.isEmpty
-                                        ? 'Required Fields'
-                                        : null;
+                                    return (value ?? '').trim().isEmpty
+                                        ? 'Required Fields.'
+                                        : ((value ?? '').trim().length < 6)
+                                            ? 'Passwords must have at least 6 character.'
+                                            : null;
                                   },
                                   obscureText: true,
                                   obscuringCharacter: '*',
@@ -337,15 +345,27 @@ class _SignInPageState extends State<SignInPage> {
                             margin: const EdgeInsets.symmetric(horizontal: 24),
                             height: 60,
                             child: ElevatedButton(
-                              onPressed:
-                                  (_isEmail == true && _isPassword == true)
-                                      ? () {
-                                          setState(() {
-                                            if (_formKey.currentState!
-                                                .validate()) {}
+                              onPressed: (_isEmail == true &&
+                                      _isPassword == true)
+                                  ? () {
+                                      setState(() {
+                                        if (_formKey.currentState!.validate()) {
+                                          AuthServices.signIn(
+                                                  emailController.text.trim(),
+                                                  passwordController.text
+                                                      .trim())
+                                              .then((value) {
+                                            if (value.user != null) {
+                                              context.goNamed('main_page');
+                                            } else {
+                                              // note: Error message when failed login to Firebase.
+                                              print(value.message);
+                                            }
                                           });
                                         }
-                                      : null,
+                                      });
+                                    }
+                                  : null,
                               style: ButtonStyle(
                                 elevation:
                                     const MaterialStatePropertyAll<double>(0),

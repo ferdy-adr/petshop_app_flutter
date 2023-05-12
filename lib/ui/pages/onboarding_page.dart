@@ -58,7 +58,7 @@ class OnboardingPage extends StatelessWidget {
                               height: 60,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  context.goNamed('sign_in');
+                                  context.goNamed('sign_in_page');
                                 },
                                 style: ButtonStyle(
                                   elevation: const MaterialStatePropertyAll(0),
