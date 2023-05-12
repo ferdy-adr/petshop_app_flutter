@@ -32,8 +32,13 @@ class MyApp extends StatelessWidget {
 
         if (firebaseUser == null) {
           if (previousPage != 'onboarding_page') {
-            previousPage = 'onboarding_page';
-            AppRouter.router.goNamed('onboarding_page');
+            if (previousPage == 'main_page') {
+              previousPage = 'onboarding_page';
+              AppRouter.router.goNamed('sign_in_page');
+            } else {
+              previousPage = 'onboarding_page';
+              AppRouter.router.goNamed('onboarding_page');
+            }
           }
         } else {
           if (previousPage != 'main_page') {

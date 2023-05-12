@@ -5,9 +5,24 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: Text('Profile Page'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Profile Page'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                previousPage = 'main_page';
+                await AuthServices.signOut();
+              },
+              child: const Text('Sign Out'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
