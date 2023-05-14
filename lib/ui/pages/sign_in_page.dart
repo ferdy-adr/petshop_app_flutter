@@ -8,7 +8,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formSignInKey = GlobalKey<FormState>();
   bool _isEmail = false;
   bool _isPassword = false;
 
@@ -61,7 +61,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           ),
                           Form(
-                            key: _formKey,
+                            key: _formSignInKey,
                             child: Column(
                               children: [
                                 TextFormField(
@@ -322,7 +322,9 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.goNamed('sign_up_page');
+                            },
                             child: const Text(
                               'Create Account',
                               style: TextStyle(
@@ -347,23 +349,23 @@ class _SignInPageState extends State<SignInPage> {
                             child: ElevatedButton(
                               onPressed: (_isEmail == true &&
                                       _isPassword == true)
-                                  ? () {
-                                      setState(() {
-                                        if (_formKey.currentState!.validate()) {
-                                          AuthServices.signIn(
-                                                  emailController.text.trim(),
-                                                  passwordController.text
-                                                      .trim())
-                                              .then((value) {
-                                            if (value.user != null) {
-                                              context.goNamed('main_page');
-                                            } else {
-                                              // note: Error message when failed login to Firebase.
-                                              print(value.message);
-                                            }
-                                          });
+                                  ? () async {
+                                      if (_formSignInKey.currentState!
+                                          .validate()) {
+                                        SignInSignUpResult result =
+                                            await AuthServices.signIn(
+                                                emailController.text.trim(),
+                                                passwordController.text.trim());
+
+                                        if (result.user != null) {
+                                          if (context.mounted) {
+                                            context.goNamed('main_page');
+                                          }
+                                        } else {
+                                          // note: Error message when failed login to Firebase.
+                                          print(result.message);
                                         }
-                                      });
+                                      }
                                     }
                                   : null,
                               style: ButtonStyle(
