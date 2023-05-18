@@ -103,16 +103,18 @@ class ProductCard extends StatelessWidget {
                   width: 30,
                   height: 30,
                   child: FloatingActionButton(
+                    heroTag: null,
                     onPressed: (addButton == null)
                         ? null
                         : () {
                             addButton!();
                           },
                     elevation: 0,
-                    backgroundColor: mainColor100,
-                    child: const Icon(
+                    backgroundColor:
+                        (addButton != null) ? mainColor100 : blackWhite10,
+                    child: Icon(
                       Icons.add,
-                      color: Colors.white,
+                      color: (addButton != null) ? Colors.white : blackWhite30,
                       size: 16,
                     ),
                   ),
