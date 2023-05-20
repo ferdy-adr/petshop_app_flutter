@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
 import 'package:email_validator/email_validator.dart';
 import 'dart:math' as math;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../shared/shared.dart';
 import '../../services/services.dart';

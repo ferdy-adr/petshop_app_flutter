@@ -184,6 +184,69 @@ class _HomeCategoryState extends State<HomeCategory> {
             ],
           ),
         ),
+        const SizedBox(height: 32),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Best Seller',
+              style: blackTextFont.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                height: 1.8,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Text(
+                'View All',
+                style: amberTextFont.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  height: 1.6,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        FutureBuilder(
+          future: ProductServices.getProducts(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return Wrap(
+                  spacing: 15,
+                  children: snapshot.data!
+                      .map((product) => ProductCard(
+                            width: (MediaQuery.of(context).size.width -
+                                    (2 * defaultMargin) -
+                                    15) /
+                                2,
+                            name: product.shortName,
+                            price: product.price,
+                            productPicture: product.picture,
+                            onTap: () {},
+                            addButton: () {},
+                          ))
+                      .toList(),
+                );
+              } else {
+                return Center(
+                  child: Text(
+                    'No products found',
+                    style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
+                  ),
+                );
+              }
+            } else {
+              return const SpinKitCircle(
+                color: mainColor100,
+              );
+            }
+          },
+        ),
       ],
     );
   }

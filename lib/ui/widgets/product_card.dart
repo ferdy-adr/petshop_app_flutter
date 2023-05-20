@@ -1,7 +1,8 @@
 part of 'widgets.dart';
 
 class ProductCard extends StatelessWidget {
-  final double width, height, price;
+  final double width, height;
+  final num price;
   final String name;
   final String? productPicture;
   final Function? onTap, addButton;
