@@ -189,9 +189,9 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 24),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Expanded(
                                   child: Divider(
                                     color: Color.fromRGBO(227, 232, 241, 1.0),
