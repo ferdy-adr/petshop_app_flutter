@@ -9,13 +9,15 @@ class ProductServices {
       required String name,
       String? shortName,
       int price = 0,
-      String? picture}) async {
+      String? picture,
+      String? description}) async {
     await _db.doc().set({
       'productID': productID,
       'name': name,
       'shortName': shortName ?? '',
       'price': price,
       'picture': picture ?? '',
+      'description': description ?? '',
     });
   }
 
@@ -33,6 +35,7 @@ class ProductServices {
             : product['shortName'],
         price: product['price'],
         picture: product['picture'],
+        description: product['description'],
       );
     }).toList();
   }

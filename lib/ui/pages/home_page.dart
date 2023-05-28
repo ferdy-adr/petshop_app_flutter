@@ -357,7 +357,13 @@ class _HomeCategoryState extends State<HomeCategory> {
                             name: product.shortName,
                             price: product.price,
                             productPicture: product.picture,
-                            onTap: () {},
+                            onTap: () {
+                              context.goNamed(
+                                'product_detail_page',
+                                pathParameters: {'id': product.productID},
+                                extra: product,
+                              );
+                            },
                             addButton: () {},
                           ))
                       .toList(),

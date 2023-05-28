@@ -30,6 +30,25 @@ class AppRouter {
         builder: (context, state) {
           return const MainPage();
         },
+        routes: [
+          GoRoute(
+            path: 'product/:id',
+            name: 'product_detail_page',
+            builder: (context, state) {
+              Object? object = state.extra;
+
+              return ProductDetail(
+                product: (object != null && object is Product)
+                    ? object
+                    : const Product(
+                        productID: 'null',
+                        name: 'null',
+                        shortName: 'null',
+                      ),
+              );
+            },
+          ),
+        ],
       ),
     ],
     initialLocation: '/welcome',

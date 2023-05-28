@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:petshop_app_flutter/models/models.dart';
 import 'package:petshop_app_flutter/shared/shared.dart';
 import 'package:petshop_app_flutter/ui/pages/pages.dart';
 import 'package:petshop_app_flutter/services/services.dart';
