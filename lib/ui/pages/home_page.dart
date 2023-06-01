@@ -73,9 +73,69 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 51),
-                const HomeHeaderCard(),
-                const SizedBox(height: 24),
+                FutureBuilder(
+                  future: ContentServices.getBanner(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SizedBox(
+                        height: 214,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 51,
+                                bottom: 24,
+                              ),
+                              child: HomeHeaderCard(
+                                height: 139,
+                                title: snapshot.data?.title ?? '',
+                                subtitle: snapshot.data?.subtitle ?? '',
+                              ),
+                            ),
+                            Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Positioned(
+                                  top: 14,
+                                  left: -defaultMargin,
+                                  child: Image(
+                                    height: 176,
+                                    width: 176,
+                                    image: NetworkImage(
+                                        snapshot.data?.picture ?? ''),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: -6,
+                                  left: 7,
+                                  child: Image(
+                                    height: 161,
+                                    width: 161,
+                                    image: NetworkImage(
+                                        snapshot.data?.picture ?? ''),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Padding(
+                        padding: EdgeInsets.only(
+                          top: 51,
+                          bottom: 24,
+                        ),
+                        child: HomeHeaderCard(
+                          height: 139,
+                          title: '',
+                          subtitle: '',
+                        ),
+                      );
+                    }
+                  },
+                ),
 
                 // note: Category Section
                 const HomeCategory(),
@@ -389,15 +449,20 @@ class _HomeCategoryState extends State<HomeCategory> {
 }
 
 class HomeHeaderCard extends StatelessWidget {
+  final double height;
+  final String title, subtitle;
+
   const HomeHeaderCard({
     super.key,
+    this.height = 139,
+    required this.title,
+    required this.subtitle,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - (2 * defaultMargin),
-      height: 139,
+      height: height,
       decoration: BoxDecoration(
         color: mainColor100,
         borderRadius: BorderRadius.circular(24),
@@ -455,7 +520,7 @@ class HomeHeaderCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20, left: 155),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Column(
@@ -463,13 +528,17 @@ class HomeHeaderCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Royal Canin\nAdult Pomeraniann',
+                      title,
+                      maxLines: 3,
+                      overflow: TextOverflow.clip,
                       style:
                           whiteTextFont.copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Get an interesting promo\nhere, without conditions',
+                      subtitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.clip,
                       style: whiteTextFont.copyWith(fontSize: 12, height: 1.3),
                     ),
                   ],
