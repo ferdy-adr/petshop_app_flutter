@@ -6,3 +6,4 @@ import 'package:petshop_app_flutter/extensions/extensions.dart';
 part 'auth_services.dart';
 part 'user_account_services.dart';
 part 'product_services.dart';
+part 'content_services.dart';
