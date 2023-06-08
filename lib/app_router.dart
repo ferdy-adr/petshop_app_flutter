@@ -48,6 +48,11 @@ class AppRouter {
               );
             },
           ),
+          GoRoute(
+            path: 'notification',
+            name: 'notification_page',
+            builder: (context, state) => const NotificationPage(),
+          )
         ],
       ),
     ],

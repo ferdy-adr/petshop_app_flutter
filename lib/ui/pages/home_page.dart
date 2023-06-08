@@ -66,7 +66,9 @@ class HomePage extends StatelessWidget {
                           const SizedBox(width: 12),
                           HeaderButton(
                             icon: Icons.notifications_outlined,
-                            onTap: () {},
+                            onTap: () {
+                              context.goNamed('notification_page');
+                            },
                           ),
                         ],
                       ),
