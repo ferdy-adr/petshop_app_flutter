@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(
                 defaultMargin, 20, defaultMargin, 103),
             child: Column(

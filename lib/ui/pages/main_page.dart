@@ -28,6 +28,7 @@ class _MainPageState extends State<MainPage> {
           children: [
             PageView(
               controller: mainPageController,
+              physics: const NeverScrollableScrollPhysics(),
               onPageChanged: (value) {
                 setState(() {
                   bottomNavBarIndex = value;
