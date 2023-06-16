@@ -391,7 +391,9 @@ class _HomeCategoryState extends State<HomeCategory> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                context.pushNamed('best_seller_page');
+              },
               child: Text(
                 'View All',
                 style: amberTextFont.copyWith(

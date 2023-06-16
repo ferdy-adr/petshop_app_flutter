@@ -52,7 +52,12 @@ class AppRouter {
             path: 'notification',
             name: 'notification_page',
             builder: (context, state) => const NotificationPage(),
-          )
+          ),
+          GoRoute(
+            path: 'best-seller',
+            name: 'best_seller_page',
+            builder: (context, state) => const BestSellerPage(),
+          ),
         ],
       ),
     ],

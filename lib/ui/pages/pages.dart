@@ -23,3 +23,4 @@ part 'profile_page.dart';
 part 'home_page.dart';
 part 'product_detail.dart';
 part 'notification_page.dart';
+part 'best_seller_page.dart';
