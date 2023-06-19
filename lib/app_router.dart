@@ -58,6 +58,11 @@ class AppRouter {
             name: 'best_seller_page',
             builder: (context, state) => const BestSellerPage(),
           ),
+          GoRoute(
+            path: 'cart',
+            name: 'cart_page',
+            builder: (context, state) => const CartPage(),
+          ),
         ],
       ),
     ],
