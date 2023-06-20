@@ -406,44 +406,63 @@ class _HomeCategoryState extends State<HomeCategory> {
           ],
         ),
         const SizedBox(height: 20),
-        FutureBuilder(
-          future: ProductServices.getProducts(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                return Wrap(
-                  spacing: 15,
-                  children: snapshot.data!
-                      .map((product) => ProductCard(
-                            width: (MediaQuery.of(context).size.width -
-                                    (2 * defaultMargin) -
-                                    15) /
-                                2,
-                            name: product.shortName,
-                            price: product.price,
-                            productPicture: product.picture,
-                            onTap: () {
-                              context.goNamed(
-                                'product_detail_page',
-                                pathParameters: {'id': product.productID},
-                                extra: product,
-                              );
-                            },
-                            addButton: () {},
-                          ))
-                      .toList(),
-                );
-              } else {
-                return Center(
-                  child: Text(
-                    'No products found',
-                    style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
-                  ),
-                );
-              }
-            } else {
+        StreamBuilder(
+          stream: ProductServices.productStream(),
+          builder: (_, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Something went wrong',
+                  style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
+                ),
+              );
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const SpinKitCircle(
                 color: mainColor100,
+              );
+            }
+
+            if (snapshot.hasData) {
+              return Wrap(
+                spacing: 15,
+                runSpacing: 15,
+                children: snapshot.data!.docs.getRange(0, 4).map((item) {
+                  Product product = Product(
+                    productID: item['productID'],
+                    name: item['name'],
+                    shortName: item['shortName'],
+                    price: item['price'],
+                    description: item['description'],
+                    picture: item['picture'],
+                  );
+
+                  return ProductCard(
+                    width: (MediaQuery.of(context).size.width -
+                            (2 * defaultMargin) -
+                            15) /
+                        2,
+                    name: product.shortName,
+                    price: product.price,
+                    productPicture: product.picture,
+                    onTap: () {
+                      context.goNamed(
+                        'product_detail_page',
+                        pathParameters: {'id': product.productID},
+                        extra: product,
+                      );
+                    },
+                    addButton: () {},
+                  );
+                }).toList(),
+              );
+            } else {
+              return Center(
+                child: Text(
+                  'No products found',
+                  style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
+                ),
               );
             }
           },

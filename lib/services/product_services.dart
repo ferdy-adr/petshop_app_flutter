@@ -39,4 +39,6 @@ class ProductServices {
       );
     }).toList();
   }
+
+  static Stream<QuerySnapshot<Object?>> productStream() => _db.snapshots();
 }
