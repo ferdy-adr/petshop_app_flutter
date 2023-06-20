@@ -36,6 +36,7 @@ class _MainPageState extends State<MainPage> {
               },
               children: const [
                 HomePage(),
+                SizedBox() /* note: Cart Page dummy. */,
                 ProfilePage(),
               ],
             ),
@@ -60,18 +61,30 @@ class _MainPageState extends State<MainPage> {
         child: BottomNavigationBar(
           backgroundColor: offWhiteBackground,
           onTap: (value) {
-            setState(() {
-              bottomNavBarIndex = value;
-              mainPageController.jumpToPage(value);
-            });
+            if (value == 1) {
+              // note: value 1 depends on CartPage index in pageview.
+              context.pushNamed('cart_page');
+            } else {
+              setState(() {
+                bottomNavBarIndex = value;
+                mainPageController.jumpToPage(value);
+              });
+            }
           },
           currentIndex: bottomNavBarIndex,
           items: [
             createBottomNavBarItem(
-                iconData: IconlyLight.home, activeIconData: IconlyBold.home),
+              iconData: IconlyLight.home,
+              activeIconData: IconlyBold.home,
+            ),
             createBottomNavBarItem(
-                iconData: IconlyLight.profile,
-                activeIconData: IconlyBold.profile),
+              iconData: IconlyLight.bag,
+              activeIconData: IconlyBold.bag,
+            ),
+            createBottomNavBarItem(
+              iconData: IconlyLight.profile,
+              activeIconData: IconlyBold.profile,
+            ),
           ],
           showSelectedLabels: false,
           showUnselectedLabels: false,

@@ -7,7 +7,7 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // note: To previous page function
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -20,7 +20,7 @@ class CartPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                         defaultMargin, 16, defaultMargin, 12),
-                    child: createHeader(),
+                    child: createHeader(context),
                   ),
                 ],
               ),
@@ -31,7 +31,7 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  SizedBox createHeader() {
+  SizedBox createHeader(BuildContext context) {
     return SizedBox(
       height: 46,
       child: Stack(
@@ -52,7 +52,7 @@ class CartPage extends StatelessWidget {
             child: HeaderButton(
               icon: IconlyLight.arrow_left_2,
               onTap: () {
-                // note: To previous page function
+                context.pop();
               },
             ),
           ),
