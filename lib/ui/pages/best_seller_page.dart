@@ -47,7 +47,7 @@ class BestSellerPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: createProductCards(),
+                child: createProductCards(context),
               ),
             ],
           ),
@@ -56,49 +56,68 @@ class BestSellerPage extends StatelessWidget {
     );
   }
 
-  FutureBuilder<List<Product>> createProductCards() {
-    return FutureBuilder(
-      future: ProductServices.getProducts(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            return GridView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(
-                  defaultMargin, 12, defaultMargin, 24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                mainAxisExtent: 210,
-              ),
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) => ProductCard(
-                name: snapshot.data![index].shortName,
-                price: snapshot.data![index].price,
-                productPicture: snapshot.data![index].picture,
+  StreamBuilder<QuerySnapshot<Object?>> createProductCards(
+      BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Object?>>(
+      stream: ProductServices.productStream(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              'Something went wrong',
+              style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
+            ),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SpinKitCircle(
+            color: mainColor100,
+          );
+        }
+
+        if (snapshot.hasData) {
+          return GridView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding:
+                const EdgeInsets.fromLTRB(defaultMargin, 12, defaultMargin, 24),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              mainAxisExtent: 210,
+            ),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (_, index) {
+              Product product = Product(
+                productID: snapshot.data!.docs[index]['productID'],
+                name: snapshot.data!.docs[index]['name'],
+                shortName: snapshot.data!.docs[index]['shortName'],
+                price: snapshot.data!.docs[index]['price'],
+                description: snapshot.data!.docs[index]['description'],
+                picture: snapshot.data!.docs[index]['picture'],
+              );
+
+              return ProductCard(
+                name: product.shortName,
+                price: product.price,
+                productPicture: product.picture,
                 onTap: () {
                   context.pushNamed(
                     'product_detail_page',
-                    pathParameters: {'id': snapshot.data![index].productID},
-                    extra: snapshot.data![index],
+                    pathParameters: {'id': product.productID},
+                    extra: product,
                   );
                 },
                 addButton: () {},
-              ),
-            );
-          } else {
-            return Center(
-              child: Text(
-                'No products found',
-                style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
-              ),
-            );
-          }
+              );
+            },
+          );
         } else {
-          return const Center(
-            child: SpinKitCircle(
-              color: mainColor100,
+          return Center(
+            child: Text(
+              'No products found',
+              style: greyTextFont.copyWith(fontWeight: FontWeight.w300),
             ),
           );
         }

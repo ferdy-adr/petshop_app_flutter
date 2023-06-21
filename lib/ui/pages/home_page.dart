@@ -406,7 +406,7 @@ class _HomeCategoryState extends State<HomeCategory> {
           ],
         ),
         const SizedBox(height: 20),
-        StreamBuilder(
+        StreamBuilder<QuerySnapshot<Object?>>(
           stream: ProductServices.productStream(),
           builder: (_, snapshot) {
             if (snapshot.hasError) {

@@ -10,6 +10,7 @@ import 'package:email_validator/email_validator.dart';
 import 'dart:math' as math;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../shared/shared.dart';
 import '../../services/services.dart';
