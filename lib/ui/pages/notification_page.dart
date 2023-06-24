@@ -62,12 +62,16 @@ class _NotificationPageState extends State<NotificationPage> {
                       option1: options.first,
                       onTapOption1: () {
                         selectedOption = options.first;
-                        setState(() {});
+                        setState(() {
+                          notificationPageController.jumpToPage(0);
+                        });
                       },
                       option2: options.last,
                       onTapOption2: () {
                         selectedOption = options.last;
-                        setState(() {});
+                        setState(() {
+                          notificationPageController.jumpToPage(1);
+                        });
                       },
                       selectedOption: selectedOption ?? options.first,
                     ),
@@ -75,10 +79,43 @@ class _NotificationPageState extends State<NotificationPage> {
                   ],
                 ),
               ),
+              Expanded(
+                child: PageView(
+                  controller: notificationPageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: const [
+                    TabNotificationPage(1),
+                    TabNotificationPage(2),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class TabNotificationPage extends StatelessWidget {
+  final int number;
+
+  const TabNotificationPage(this.number, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 3,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            Text(number.toString()),
+            Text(number.toString()),
+            Text(number.toString()),
+          ],
+        );
+      },
     );
   }
 }
